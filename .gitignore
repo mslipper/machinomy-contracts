@@ -12,6 +12,7 @@ build/wrappers/*.js
 helpers/*.js
 types/*.js
 test/*.js
+support/*.js
 src/*.js
 index.js
 

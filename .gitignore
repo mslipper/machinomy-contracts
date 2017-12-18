@@ -16,5 +16,6 @@ support/*.js
 src/*.js
 index.js
 coverage.json
+coverage/
 
 .DS_Store

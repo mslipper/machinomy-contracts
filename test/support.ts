@@ -16,7 +16,7 @@ export function getNetwork (web3: Web3): Promise<number> {
 }
 
 export namespace ERC20Example {
-  const Json = require('../build/contracts/ERC20example.json')
+  export const Json = require('../build/contracts/ERC20example.json')
 
   export interface Contract {
     address: string
@@ -29,6 +29,7 @@ export namespace ERC20Example {
 
   export const deploy = function (provider?: Web3.Provider, opts?: Web3.TxData): Promise<Contract> {
     let instance = truffle<Contract>(Json)
+    if (opts) instance.defaults(opts)
     if (provider) {
       instance.setProvider(provider)
     }

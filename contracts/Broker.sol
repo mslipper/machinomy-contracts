@@ -1,4 +1,4 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.18;
 
 import "zeppelin-solidity/contracts/lifecycle/Destructible.sol";
 
@@ -137,9 +137,9 @@ contract Broker is Destructible {
         uint32 _chainId, address contractId, bytes32 channelId,
         uint256 payment,
         uint8 sigV, bytes32 sigR, bytes32 sigS
-    ) 
-        public 
-        returns(bool) 
+    )
+        public pure
+        returns(bool)
     {
         var actualHash = sha256(
             _chainId, contractId, channelId,

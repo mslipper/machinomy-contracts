@@ -15,7 +15,7 @@ const web3 = (global as any).web3 as Web3
 contract('Broker', accounts => {
   const sender = accounts[0]
   const receiver = accounts[1]
-  const contract = Broker.contract(web3.currentProvider, { from: sender, gas: 200000 })
+  const contract = Broker.contract(web3.currentProvider, { from: sender, gas: 1700000 })
 
   const createChannel = async (instance: Broker.Contract) => {
     let options = { value: web3.toWei(1, 'ether') }
@@ -26,7 +26,6 @@ contract('Broker', accounts => {
   it('create channel', async () => {
     let instance = await contract.deployed()
     let event = await createChannel(instance)
-
     expect(event.event).to.equal('DidCreateChannel')
     expect(event.args.channelId).to.be.a('string')
   })

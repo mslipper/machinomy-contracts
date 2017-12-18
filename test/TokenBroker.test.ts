@@ -19,14 +19,14 @@ contract('TokenBroker', async accounts => {
   const sender = accounts[1]
   const receiver = accounts[2]
   const startChannelValue = new BigNumber(2)
-  const contract = TokenBroker.contract(web3.currentProvider, { from: sender, gas: 700000 })
+  const contract = TokenBroker.contract(web3.currentProvider, { from: sender, gas: 1200000 })
 
   const createChannel = async function (broker: TokenBroker.Contract, token: ERC20Example.Contract) {
     return await broker.createChannel(token.address, receiver, new BigNumber(100), new BigNumber(1), startChannelValue)
   }
 
   const setup = async function (): Promise<Setup> {
-    let token = await ERC20Example.deploy(web3.currentProvider, { from: owner, gas: 700000 })
+    let token = await ERC20Example.deploy(web3.currentProvider, { from: owner, gas: 2300000 })
     let broker = await contract.deployed()
     await token.mint(owner, 100, { from: owner })
     await token.mint(sender, 100, { from: owner })

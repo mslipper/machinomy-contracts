@@ -18,7 +18,7 @@
     "support:build": "tsc --project support/tsconfig.json",
     "support:wrap": "yarn support:build && node support/wrap.js 'build/contracts/@(Broker|TokenBroker|ERC20).json' --output build/wrappers",
     "truffle:test:vanilla": "truffle test ./test/*.test.js",
-    "truffle:test": "run-with-testrpc --networkId 999 --mnemonic 'testtest' --unlock 0 'yarn run truffle:test:vanilla'",
+    "truffle:test": "run-with-testrpc --gas 2100000 --networkId 999 --unlock 0 'yarn run truffle:test:vanilla'",
     "truffle:migrate": "truffle migrate",
     "truffle:migrate:ropsten": "truffle migrate --network ropsten",
     "test": "yarn run build && yarn run truffle:test",
@@ -53,23 +53,22 @@
     "glob": "^7.1.2",
     "handlebars": "^4.0.11",
     "run-with-testrpc": "^0.2.1",
-    "solium": "^1.0.11",
     "solidity-coverage": "https://github.com/ukstv/solidity-coverage",
-    "truffle": "^3.2.93",
+    "solium": "^1.0.11",
+    "truffle": "^4.0.3",
     "tslint": "^5.7.0",
     "tslint-config-standard": "^6.0.1",
     "types-bn": "^0.0.1",
     "types-ethereumjs-util": "https://github.com/machinomy/types-ethereumjs-util.git",
-    "typescript": "^2.5.3"
+    "typescript": "^2.5.3",
+    "chai": "^4.1.2",
+    "web3": "^0.20.1",
+    "zeppelin-solidity": "^1.4.0"
   },
   "dependencies": {
     "bignumber.js": "^4.1.0",
-    "buffer": "^5.0.7",
-    "chai": "^4.1.2",
     "ethereumjs-abi": "https://github.com/ethereumjs/ethereumjs-abi",
     "ethereumjs-util": "^5.1.2",
-    "truffle-contract": "^3.0.0",
-    "web3": "^0.20.1",
-    "zeppelin-solidity": "^1.2.0"
+    "truffle-contract": "^3.0.0"
   }
 }

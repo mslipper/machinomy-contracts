@@ -23,9 +23,10 @@
     "truffle:migrate:ropsten": "truffle migrate --network ropsten",
     "test": "yarn run build && yarn run truffle:test",
     "build": "yarn run support:wrap && tsc --project tsconfig.json",
-    "lint": "tslint -t stylish --type-check -p '.'",
+    "lint": "tslint -t stylish --project '.'",
     "prepare": "yarn lint && yarn build",
-    "sollint": "solium -d contracts/"
+    "sollint": "solium -d contracts/",
+    "coverage": "solidity-coverage"
   },
   "repository": {
     "type": "git",

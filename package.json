@@ -1,6 +1,6 @@
 {
   "name": "@machinomy/contracts",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Machinomy contracts managed by Truffle",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -24,7 +24,8 @@
     "test": "yarn run build && yarn run truffle:test",
     "build": "yarn run support:wrap && tsc --project tsconfig.json",
     "lint": "tslint -t stylish --type-check -p '.'",
-    "prepare": "yarn build && yarn lint"
+    "prepare": "yarn lint && yarn build",
+    "sollint": "solium -d contracts/"
   },
   "repository": {
     "type": "git",
@@ -52,6 +53,7 @@
     "glob": "^7.1.2",
     "handlebars": "^4.0.11",
     "run-with-testrpc": "^0.2.1",
+    "solium": "^1.0.11",
     "solidity-coverage": "https://github.com/ukstv/solidity-coverage",
     "truffle": "^3.2.93",
     "tslint": "^5.7.0",

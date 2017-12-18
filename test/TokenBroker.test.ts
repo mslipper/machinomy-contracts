@@ -14,12 +14,12 @@ interface Setup {
   token: ERC20Example.Contract
 }
 
-contract('TokenBroker', async accounts => {
+contract('TokenBroker', accounts => {
   const owner = accounts[0]
   const sender = accounts[1]
   const receiver = accounts[2]
   const startChannelValue = new BigNumber(2)
-  const contract = TokenBroker.contract(web3.currentProvider, { from: sender, gas: 1200000 })
+  const contract = TokenBroker.contract(web3.currentProvider, { from: sender, gas: 2800000 })
 
   const createChannel = async function (broker: TokenBroker.Contract, token: ERC20Example.Contract) {
     return await broker.createChannel(token.address, receiver, new BigNumber(100), new BigNumber(1), startChannelValue)
@@ -27,7 +27,8 @@ contract('TokenBroker', async accounts => {
 
   const setup = async function (): Promise<Setup> {
     let token = await ERC20Example.deploy(web3.currentProvider, { from: owner, gas: 2300000 })
-    let broker = await contract.deployed()
+    let networkId = await getNetwork(web3)
+    let broker = await contract.new(networkId)
     await token.mint(owner, 100, { from: owner })
     await token.mint(sender, 100, { from: owner })
     await token.mint(receiver, 100, { from: owner })
@@ -76,7 +77,7 @@ contract('TokenBroker', async accounts => {
     const s = '0x' + signature.s.toString('hex')
 
     const startReceiverBalance = await token.balanceOf(receiver)
-    await broker.claim(channelId, startChannelValue, new BigNumber(v), r, s, {from: receiver, gas: 200000})
+    await broker.claim(channelId, startChannelValue, v, r, s, {from: receiver, gas: 200000})
     const newReceiverBalance = await token.balanceOf(receiver)
 
     expect(newReceiverBalance).to.deep.equal(startReceiverBalance.plus(startChannelValue))

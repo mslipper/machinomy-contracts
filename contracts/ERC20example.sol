@@ -1,10 +1,9 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.18;
 
-import "zeppelin-solidity/contracts/token/StandardToken.sol";
 import "zeppelin-solidity/contracts/token/MintableToken.sol";
 
 
-contract ERC20example is StandardToken, MintableToken {
+contract ERC20example is MintableToken {
     function ERC20example() public {
     }
 }

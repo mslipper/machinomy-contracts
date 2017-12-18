@@ -3,8 +3,8 @@ import { TransactionResult } from 'truffle-contract'
 import BigNumber from 'bignumber.js'
 import * as truffle from 'truffle-contract'
 
-export function getNetwork (web3: Web3): Promise<number> {
-  return new Promise((resolve, reject) => {
+export async function getNetwork (web3: Web3): Promise<number> {
+  return new Promise<number>((resolve, reject) => {
     web3.version.getNetwork((error, result) => {
       if (error) {
         reject(error)

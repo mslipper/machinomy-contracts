@@ -12,26 +12,37 @@ const expect = chai.expect
 
 const web3 = (global as any).web3 as Web3
 
-contract('Broker', accounts => {
+let _broker: Broker.Contract | null = null
+async function deployedBroker (sender: string): Promise<Broker.Contract> {
+  if (_broker) {
+    return _broker
+  } else {
+    let contract = Broker.contract(web3.currentProvider, { from: sender, gas: 2700000 })
+    let networkId = await getNetwork(web3)
+    _broker = await contract.new(networkId)
+    return _broker
+  }
+}
+
+contract('Broker', async accounts => {
   const sender = accounts[0]
   const receiver = accounts[1]
-  const contract = Broker.contract(web3.currentProvider, { from: sender, gas: 1700000 })
 
   const createChannel = async (instance: Broker.Contract) => {
-    let options = { value: web3.toWei(1, 'ether') }
+    let options = { value: web3.toWei(1, 'ether'), gas: 3000000 }
     const log = await instance.createChannel(receiver, new BigNumber(100), new BigNumber(1), options)
     return log.logs[0]
   }
 
   it('create channel', async () => {
-    let instance = await contract.deployed()
+    let instance = await deployedBroker(sender)
     let event = await createChannel(instance)
     expect(event.event).to.equal('DidCreateChannel')
     expect(event.args.channelId).to.be.a('string')
   })
 
   it('deposit', async () => {
-    let instance = await contract.deployed()
+    let instance = await deployedBroker(sender)
     const event = await createChannel(instance)
 
     let startBalance = web3.eth.getBalance(instance.address)
@@ -46,7 +57,7 @@ contract('Broker', accounts => {
   })
 
   it('claim by receiver', async () => {
-    let instance = await contract.deployed()
+    let instance = await deployedBroker(sender)
     const event = await createChannel(instance)
 
     const channelId = event.args.channelId
@@ -64,7 +75,7 @@ contract('Broker', accounts => {
   })
 
   it('settle by sender', async () => {
-    let instance = await contract.deployed()
+    let instance = await deployedBroker(sender)
 
     const didCreateEvent = await createChannel(instance)
     const channelId = didCreateEvent.args.channelId
@@ -81,7 +92,7 @@ contract('Broker', accounts => {
   })
 
   it('settle by sender, then by receiver', async () => {
-    let instance = await contract.deployed()
+    let instance = await deployedBroker(sender)
 
     const didCreateEvent = await createChannel(instance)
     const channelId = didCreateEvent.args.channelId
